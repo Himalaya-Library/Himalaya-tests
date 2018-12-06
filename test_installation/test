@@ -1,0 +1,35 @@
+#!/bin/sh -x
+
+clean_up() {
+    rm -rf Himalaya
+    rm -rf build
+    rm -rf example
+}
+
+trap clean_up 0
+trap "exit 1" INT QUIT TERM
+
+clean_up
+
+source=${SOURCE:-"https://github.com/Himalaya-Library/Himalaya"}
+
+git clone "$source" Himalaya
+
+( cd Himalaya && \
+  mkdir build && \
+  cd build && \
+  cmake -DCMAKE_INSTALL_PREFIX=local .. && \
+  make -j4 && \
+  make install )
+
+[ "x$?" != "x0" ] && exit 1
+
+export LD_LIBRARY_PATH="$PWD/Himalaya/build/local/lib:${LD_LIBRARY_PATH}"
+export PKG_CONFIG_PATH="Himalaya/build/local/lib/pkgconfig"
+
+meson build && \
+cd build && \
+ninja && \
+./example
+
+[ "x$?" != "x0" ] && exit 1
