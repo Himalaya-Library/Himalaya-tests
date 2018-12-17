@@ -32,4 +32,4 @@ cd build && \
 ninja && \
 ./example
 
-[ "x$?" != "x0" ] && exit 1
+exit $?
