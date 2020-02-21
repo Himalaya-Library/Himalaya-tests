@@ -1,6 +1,7 @@
 #!/bin/sh
 
 tests="\
+test_FindHimalaya
 test_installation
 "
 
