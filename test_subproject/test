@@ -20,4 +20,4 @@ git clone "${repository}" "${source_dir}"
   cd build && \
   cmake .. && \
   cmake --build . && \
-  ./example )
+  ./example-cpp )
