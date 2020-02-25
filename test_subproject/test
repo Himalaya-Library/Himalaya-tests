@@ -1,0 +1,23 @@
+#!/bin/sh -xe
+
+repository=${SOURCE:-"https://github.com/Himalaya-Library/Himalaya"}
+this_dir="$(realpath $(dirname $0))"
+source_dir="${this_dir}/Himalaya"
+
+clean_up() {
+    rm -rf "${source_dir}"
+    rm -rf build
+}
+
+trap clean_up 0
+trap "exit 1" INT QUIT TERM
+
+clean_up
+
+git clone "${repository}" "${source_dir}"
+
+( mkdir build && \
+  cd build && \
+  cmake .. && \
+  cmake --build . && \
+  ./example )

@@ -3,6 +3,7 @@
 tests="\
 test_FindHimalaya
 test_installation
+test_subproject
 "
 
 count=0
